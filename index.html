@@ -1,9 +1,253 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Website</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PhenoLeaf-TS: A Time-Series Benchmark for Leaf Instance Segmentation, Tracking, and Growth Stage Classification</title>
+<meta name="description" content="PhenoLeaf-TS — a time-series dataset of 17,082 RGB images across 21 Arabidopsis genotypes with temporally consistent, colour-coded leaf instance masks. ECCV 2026.">
+<style>
+  :root{ --green:#1e5631; --green2:#2e5e4e; --bg:#ffffff; --soft:#f4f7f5; --line:#dfe6e2; --ink:#1b1f1d; --muted:#5b6b63; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+        color:var(--ink); line-height:1.6; background:var(--bg); }
+  a{ color:var(--green); }
+  header{ background:linear-gradient(160deg,#1e5631,#2e7d4f); color:#fff; padding:54px 20px 40px; text-align:center; }
+  header .badge{ display:inline-block; border:1px solid rgba(255,255,255,.6); border-radius:20px; padding:3px 14px;
+        font-size:13px; letter-spacing:.5px; margin-bottom:18px; }
+  header h1{ margin:0 auto 6px; max-width:980px; font-size:30px; line-height:1.25; }
+  header .sub{ max-width:880px; margin:0 auto 20px; font-size:17px; opacity:.95; }
+  .authors{ font-size:18px; margin:10px 0 4px; }
+  .authors sup{ font-size:11px; }
+  .affil{ font-size:13px; opacity:.9; max-width:820px; margin:2px auto; }
+  .links{ margin-top:22px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  .links a{ background:#fff; color:var(--green); text-decoration:none; font-weight:600; font-size:15px;
+        padding:9px 16px; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,.2); }
+  .links a:hover{ background:#eafaf0; }
+  main{ max-width:960px; margin:0 auto; padding:0 20px 60px; }
+  section{ padding:34px 0 8px; border-bottom:1px solid var(--line); }
+  h2{ color:var(--green); font-size:24px; margin:0 0 14px; }
+  h3{ color:var(--green2); font-size:18px; margin:22px 0 8px; }
+  .stats{ display:flex; flex-wrap:wrap; gap:12px; margin:18px 0; }
+  .stat{ background:var(--soft); border:1px solid var(--line); border-radius:10px; padding:12px 16px; flex:1 1 150px; text-align:center; }
+  .stat b{ display:block; font-size:22px; color:var(--green); }
+  .stat span{ font-size:13px; color:var(--muted); }
+  figure{ margin:20px 0; text-align:center; }
+  figure img{ max-width:100%; height:auto; border:1px solid var(--line); border-radius:8px; }
+  figcaption{ font-size:13px; color:var(--muted); margin-top:8px; }
+  table{ border-collapse:collapse; width:100%; margin:14px 0; font-size:14px; }
+  th,td{ border:1px solid var(--line); padding:7px 10px; text-align:center; }
+  th{ background:var(--green2); color:#fff; }
+  td:first-child,th:first-child,td:nth-child(2){ text-align:left; }
+  tr.best td{ background:#e7f0ec; font-weight:600; }
+  ul.hl{ padding-left:20px; } ul.hl li{ margin:6px 0; }
+  pre{ background:#f2f2f2; border:1px solid var(--line); border-radius:8px; padding:14px; overflow:auto; font-size:13px; }
+  .note{ background:#fff8e1; border-left:5px solid #e0a800; border-radius:4px; padding:10px 14px; margin:16px 0;
+        font-size:13.5px; color:#6b5500; }
+  .dl{ display:block; background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:12px 16px;
+        margin:10px 0; text-decoration:none; color:var(--ink); }
+  .dl b{ color:var(--green); } .dl:hover{ background:#eef4f0; }
+  footer{ text-align:center; color:var(--muted); font-size:13px; padding:26px 20px 40px; }
+</style>
 </head>
 <body>
-  <h1>Hello, website is here!</h1>
+<header>
+  <div class="badge">ECCV 2026</div>
+  <h1>PhenoLeaf-TS</h1>
+  <div class="sub">A Time-Series Benchmark for Leaf Instance Segmentation, Tracking, and Growth Stage Classification</div>
+  <div class="authors">
+    Rijad Sarić<sup>1</sup>&nbsp;&nbsp; Basim Azam<sup>2</sup>&nbsp;&nbsp; Sarmad Khan<sup>2</sup>&nbsp;&nbsp; Edhem Čustović<sup>3</sup>
+  </div>
+  <div class="affil"><sup>1</sup> ARC Research Hub for Protected Cropping, La Trobe University, Melbourne, VIC 3086, Australia</div>
+  <div class="affil"><sup>2</sup> Department of Computer Science, Technological University Dublin, Ireland</div>
+  <div class="affil"><sup>3</sup> Photon Systems Instruments (PSI), 664 24 Drásov, Czech Republic</div>
+  <div class="links">
+    <a href="#" id="paper-link">📄 Paper PDF</a>
+    <a href="https://github.com/pisyntor/PhenoLeaf-TS">💻 Code</a>
+    <a href="#" id="data-link">🗄️ Dataset (Figshare)</a>
+    <a href="#citation">📌 BibTeX</a>
+  </div>
+</header>
+
+<main>
+  <section id="overview">
+    <h2>Overview</h2>
+    <p>Image-based high-throughput plant phenotyping requires an instance-level understanding of how individual leaves
+    grow over experimental time, yet existing datasets lack the temporal depth and annotation consistency needed to
+    jointly benchmark segmentation, tracking, and growth stage classification.</p>
+    <p><b>PhenoLeaf-TS</b> is a time-series dataset of <b>17,082</b> top-down RGB images spanning <b>21</b>
+    <i>Arabidopsis thaliana</i> genotypes, totalling <b>318</b> plant replicates, each annotated with colour-coded leaf
+    instance masks that maintain a consistent identity throughout the growth sequence. We define three benchmark tasks
+    with standardised protocols and evaluate 21 models: 9 instance-segmentation architectures, 6 multi-object trackers,
+    and 6 classification architectures.</p>
+    <div class="stats">
+      <div class="stat"><b>17,082</b><span>RGB images</span></div>
+      <div class="stat"><b>21</b><span>genotypes</span></div>
+      <div class="stat"><b>318</b><span>plant replicates</span></div>
+      <div class="stat"><b>31</b><span>colour palette</span></div>
+      <div class="stat"><b>3</b><span>benchmark tasks</span></div>
+    </div>
+    <figure>
+      <img src="assets/fig1_overview.png" alt="PhenoLeaf-TS overview">
+      <figcaption><b>Figure 1.</b> (a) Samples across seven genotypes: raw RGB (top), colour-coded instance labels
+      (middle), overlays (bottom). (b) Temporal sequence of one plant (Day 1&ndash;22); leaf colours persist across frames.</figcaption>
+    </figure>
+    <div class="note">[SLIDER] Raw RGB growth sequence of one plant, Day 1 &rarr; Day 22 &mdash; to be added.</div>
+  </section>
+
+  <section id="highlights">
+    <h2>Highlights</h2>
+    <ul class="hl">
+      <li>17,082 RGB images &middot; 21 Arabidopsis genotypes &middot; 318 replicates &middot; ~530&times;525 px</li>
+      <li>Temporally consistent, colour-coded leaf instance masks (fixed 31-colour palette)</li>
+      <li>Three tasks in one dataset: instance segmentation, leaf tracking, growth stage classification</li>
+      <li>21 baseline models benchmarked under standardised protocols</li>
+      <li>First dataset to combine large-scale time-series imagery, per-leaf instance labels, tracking, and growth stages</li>
+      <li>Effective pre-training source: up to <b>+51.4 mAP</b> fine-tuning gain on external datasets</li>
+    </ul>
+  </section>
+
+  <section id="dataset">
+    <h2>The Dataset</h2>
+    <h3>Collection &amp; Annotation</h3>
+    <p>21 <i>Arabidopsis thaliana</i> genotypes were grown in a controlled chamber and imaged from above (2&ndash;4 images/day)
+    with a 4.92 MP RGB camera on an automated gantry. Each of the 318 replicates is a separate sequence from seedling
+    emergence to a mature rosette. Leaf instance masks were manually annotated in CVAT with a fixed palette of 31
+    perceptually distinct colours; the same physical leaf keeps the same colour across all frames, so tracking accuracy
+    can be measured directly against the colour-coded ground truth. All annotations passed a two-pass QC review.</p>
+    <div class="note">[VIDEO] Side-by-side raw RGB &rarr; colour-coded GT mask, sliding through the sequence &mdash; to be added.</div>
+    <figure>
+      <img src="assets/fig2_stats.png" alt="Dataset statistics">
+      <figcaption><b>Figure 2.</b> (a) Leaf-count distribution (mean 9.7, range 4&ndash;26). (b) Images per genotype.
+      (c) Growth-stage distribution. (d) The 31-colour annotation palette.</figcaption>
+    </figure>
+    <h3>Comparison with existing datasets</h3>
+    <table>
+      <thead><tr><th>Dataset</th><th>Species</th><th>Images</th><th>Instance</th><th>Time-series</th><th>Tracking</th><th>Growth</th><th>Public</th></tr></thead>
+      <tbody>
+        <tr><td>Ara2012</td><td><i>A. thaliana</i></td><td>120</td><td>&checkmark;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&checkmark;</td></tr>
+        <tr><td>Ara2013</td><td><i>A. thaliana</i></td><td>27</td><td>&checkmark;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&checkmark;</td></tr>
+        <tr><td>Ara2014</td><td><i>A. thaliana</i></td><td>168</td><td>&checkmark;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&checkmark;</td></tr>
+        <tr><td>MSU-PID</td><td><i>A. thaliana</i>/Bean</td><td>2,000+</td><td>Partial</td><td>&checkmark;</td><td>&ndash;</td><td>&ndash;</td><td>&checkmark;</td></tr>
+        <tr><td>Komatsuna</td><td>Komatsuna</td><td>900</td><td>&checkmark;</td><td>&checkmark;</td><td>&checkmark;</td><td>&ndash;</td><td>&checkmark;</td></tr>
+        <tr><td>PhenoBench</td><td>Sugar beet</td><td>1,500+</td><td>Panoptic</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&checkmark;</td></tr>
+        <tr class="best"><td>PhenoLeaf-TS (Ours)</td><td><i>A. thaliana</i> (21)</td><td>17,082</td><td>&checkmark;</td><td>&checkmark;</td><td>&checkmark;</td><td>&checkmark;</td><td>&checkmark;</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="tasks">
+    <h2>Benchmark Tasks &amp; Results</h2>
+    <p>All experiments use a 70/15/15 random split per replicate at the image level. Trackers use IS-1 (YOLOv11)
+    detections; classifiers are fine-tuned from ImageNet (DINOv2 for CL-5). All runs on 4&times; NVIDIA A100 GPUs.</p>
+
+    <h3>Task 1 &mdash; Leaf Instance Segmentation</h3>
+    <p>Best: <b>Mask R-CNN R50-FPN, 73.2 mAP</b>. Two-stage detectors lead; larger backbones do not help (R50 &gt; R101 &gt; X101).</p>
+    <table>
+      <thead><tr><th>ID</th><th>Model</th><th>Backbone</th><th>mAP</th><th>mAP<sub>50</sub></th><th>mAP<sub>75</sub></th></tr></thead>
+      <tbody>
+        <tr class="best"><td>IS-3</td><td>Mask R-CNN</td><td>R50-FPN</td><td>73.2</td><td>94.3</td><td>82.9</td></tr>
+        <tr><td>IS-4</td><td>Mask R-CNN</td><td>R101-FPN</td><td>72.4</td><td>93.4</td><td>81.6</td></tr>
+        <tr><td>IS-6</td><td>Cascade Mask R-CNN</td><td>R50-FPN</td><td>71.9</td><td>91.5</td><td>81.8</td></tr>
+        <tr><td>IS-8</td><td>Mask2Former</td><td>Swin-L</td><td>71.9</td><td>94.6</td><td>82.7</td></tr>
+        <tr><td>IS-5</td><td>Mask R-CNN</td><td>X101-FPN</td><td>71.3</td><td>91.4</td><td>80.4</td></tr>
+        <tr><td>IS-9</td><td>Grounded SAM2</td><td>Hiera-L</td><td>71.1</td><td>87.9</td><td>81.2</td></tr>
+        <tr><td>IS-1</td><td>YOLOv11-seg</td><td>CSPDarknet-X</td><td>68.2</td><td>84.7</td><td>&ndash;</td></tr>
+        <tr><td>IS-2</td><td>YOLO26-seg</td><td>CSPDarknet-L</td><td>67.3</td><td>84.3</td><td>&ndash;</td></tr>
+        <tr><td>IS-7</td><td>SAM2 (AMG)</td><td>Hiera-L</td><td>55.0</td><td>66.7</td><td>63.2</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="assets/fig_seg_qualitative.png" alt="Qualitative segmentation">
+      <figcaption><b>Figure 3.</b> Qualitative segmentation: Input, GT, and predictions across model families.</figcaption>
+    </figure>
+
+    <h3>Task 2 &mdash; Leaf Tracking</h3>
+    <p>Best: <b>ByteTrack, 84.1% MOTA / 91.0% IDF1</b>. Inclusive two-threshold association handles newly emerged leaves.</p>
+    <table>
+      <thead><tr><th>ID</th><th>Tracker</th><th>MOTA&uarr;</th><th>MOTP&darr;</th><th>IDF1&uarr;</th><th>IDSW&darr;</th><th>Prec&uarr;</th><th>Recall&uarr;</th></tr></thead>
+      <tbody>
+        <tr class="best"><td>TR-5</td><td>ByteTrack</td><td>84.1</td><td>29.8</td><td>91.0</td><td>590</td><td>99.5</td><td>85.9</td></tr>
+        <tr><td>TR-1</td><td>BoTSORT</td><td>83.1</td><td>27.1</td><td>90.3</td><td>692</td><td>99.5</td><td>85.1</td></tr>
+        <tr><td>TR-2</td><td>DeepSORT</td><td>68.4</td><td>33.7</td><td>81.7</td><td>43</td><td>96.7</td><td>70.9</td></tr>
+        <tr><td>TR-3</td><td>Deep-OC-SORT</td><td>66.1</td><td>23.4</td><td>79.5</td><td>417</td><td>99.6</td><td>67.4</td></tr>
+        <tr><td>TR-6</td><td>StrongSORT</td><td>64.2</td><td>24.2</td><td>78.0</td><td>345</td><td>99.8</td><td>65.2</td></tr>
+        <tr><td>TR-4</td><td>Norfair</td><td>57.8</td><td>&ndash;</td><td>73.4</td><td>71</td><td>99.3</td><td>58.4</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="assets/fig_tracking_qualitative.png" alt="Qualitative tracking" style="max-width:560px">
+      <figcaption><b>Figure 4.</b> Tracking on a Col-0 replicate (7 timepoints). Top: GT temporal masks; rows: each
+      tracker recoloured to the GT palette. ByteTrack and BoTSORT keep identities most faithfully.</figcaption>
+    </figure>
+    <div class="note">[VIDEO] Tracked leaf sequence with persistent colour IDs (ByteTrack vs GT) &mdash; to be added.</div>
+
+    <h3>Task 3 &mdash; Growth Stage Classification</h3>
+    <p>Best: <b>Swin-T, 91.7% accuracy</b>. Errors concentrate at adjacent-stage boundaries; no model confuses Early with Mature.</p>
+    <table>
+      <thead><tr><th>ID</th><th>Model</th><th>Pre-train</th><th>Acc</th><th>F1<sub>macro</sub></th><th>Prec</th><th>MCC</th></tr></thead>
+      <tbody>
+        <tr class="best"><td>CL-6</td><td>Swin-T</td><td>ImageNet</td><td>91.7</td><td>91.7</td><td>92.4</td><td>0.873</td></tr>
+        <tr><td>CL-3</td><td>EfficientNetV2-S</td><td>ImageNet</td><td>91.4</td><td>91.4</td><td>91.5</td><td>0.869</td></tr>
+        <tr><td>CL-2</td><td>ResNet-101</td><td>ImageNet</td><td>89.7</td><td>89.6</td><td>90.1</td><td>0.843</td></tr>
+        <tr><td>CL-1</td><td>ResNet-50</td><td>ImageNet</td><td>89.4</td><td>89.4</td><td>89.9</td><td>0.838</td></tr>
+        <tr><td>CL-5</td><td>DINOv2-B</td><td>DINOv2</td><td>87.1</td><td>87.1</td><td>88.2</td><td>0.803</td></tr>
+        <tr><td>CL-4</td><td>ViT-B/16</td><td>ImageNet</td><td>85.1</td><td>85.3</td><td>86.1</td><td>0.771</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="assets/fig_confusion.png" alt="Confusion matrices">
+      <figcaption><b>Figure 5.</b> Confusion matrices for all six classifiers; Swin-T (CL-6) is the most balanced.</figcaption>
+    </figure>
+  </section>
+
+  <section id="transfer">
+    <h2>Cross-Dataset Transfer</h2>
+    <p>Fine-tuning from PhenoLeaf-TS weights consistently improves performance on CVPPP (Ara2012, Ara2013) and
+    Komatsuna; the largest gain (<b>+51.4 mAP</b>) is cross-species transfer to Komatsuna.</p>
+    <table>
+      <thead><tr><th>Dataset</th><th>Task</th><th>Model</th><th>Zero-shot</th><th>Fine-tuned</th><th>&Delta;</th></tr></thead>
+      <tbody>
+        <tr><td>Ara2012</td><td>Seg.</td><td>Mask R-CNN (IS-3)</td><td>55.3</td><td>73.9</td><td>+18.6</td></tr>
+        <tr><td>Ara2013</td><td>Seg.</td><td>Mask R-CNN (IS-3)</td><td>53.5</td><td>75.2</td><td>+21.7</td></tr>
+        <tr><td>Ara2013</td><td>Cls.</td><td>Swin-T (CL-6)</td><td>21.0</td><td>78.0</td><td>+57.0</td></tr>
+        <tr class="best"><td>Komatsuna</td><td>Seg.</td><td>Mask R-CNN (IS-3)</td><td>34.7</td><td>86.1</td><td>+51.4</td></tr>
+        <tr><td>Komatsuna</td><td>Seg.</td><td>Mask2Former (IS-8)</td><td>47.1</td><td>76.7</td><td>+29.6</td></tr>
+      </tbody>
+    </table>
+    <figure>
+      <img src="assets/fig_crossdataset.png" alt="Cross-dataset transfer">
+      <figcaption><b>Figure 6.</b> Zero-shot vs fine-tuned transfer on Ara2012, Ara2013, and Komatsuna.</figcaption>
+    </figure>
+  </section>
+
+  <section id="downloads">
+    <h2>Downloads</h2>
+    <a class="dl" href="#" id="data-link2"><b>Dataset (Figshare)</b> &mdash; 17,082 images + colour-coded instance masks + split files. <i>[DOI pending]</i></a>
+    <a class="dl" href="https://github.com/pisyntor/PhenoLeaf-TS"><b>Code (GitHub)</b> &mdash; training, evaluation, and transfer pipelines for all 21 models.</a>
+    <a class="dl" href="#" id="models-link"><b>Trained models</b> &mdash; best checkpoints per task. <i>[host TBD]</i></a>
+    <a class="dl" href="#" id="paper-link2"><b>Paper PDF</b> &mdash; camera-ready, ECCV 2026. <i>[link TBD]</i></a>
+  </section>
+
+  <section id="citation">
+    <h2>Citation</h2>
+    <pre>@inproceedings{saric2026phenoleafts,
+  title     = {PhenoLeaf-TS: A Time-Series Benchmark for Leaf Instance
+               Segmentation, Tracking, and Growth Stage Classification},
+  author    = {Sari\'c, Rijad and Azam, Basim and Khan, Sarmad and \v{C}ustovi\'c, Edhem},
+  booktitle = {Proceedings of the European Conference on Computer Vision (ECCV)},
+  year      = {2026}
+}</pre>
+  </section>
+
+  <section id="contact" style="border-bottom:none">
+    <h2>Acknowledgements &amp; Contact</h2>
+    <p class="note">[Confirm funding/acknowledgements &mdash; e.g. ARC Research Hub for Protected Cropping; Photon Systems
+    Instruments (PSI); compute provided by the CEITEC HPC facility. Add corresponding-author email.]</p>
+  </section>
+</main>
+
+<footer>
+  PhenoLeaf-TS &middot; ECCV 2026 &middot; <a href="https://github.com/pisyntor/PhenoLeaf-TS">github.com/pisyntor/PhenoLeaf-TS</a>
+</footer>
 </body>
 </html>
