@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phenoleaf-ts"
+version = "0.1.0"
+description = "PhenoLeaf-TS: a time-series benchmark for leaf instance segmentation, tracking, and growth-stage classification (ECCV 2026)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "Rijad Sarić" },
+  { name = "Basim Azam" },
+  { name = "Sarmad Khan" },
+  { name = "Edhem Čustović" },
+]
+keywords = ["plant phenotyping", "instance segmentation", "tracking", "benchmark", "arabidopsis"]
+dependencies = [
+  "numpy",
+  "pillow",
+  "opencv-python",
+  "scikit-learn",
+  "scipy",
+  "scikit-image",
+  "pyyaml",
+  "tqdm",
+]
+
+[project.optional-dependencies]
+hf = ["datasets"]
+
+[project.urls]
+Homepage = "https://pisyntor.github.io/PhenoLeaf-TS/"
+Repository = "https://github.com/pisyntor/PhenoLeaf-TS"
+Dataset = "https://huggingface.co/datasets/basimazam/PhenoLeaf-TS"
+
+[tool.setuptools.packages.find]
+include = ["phenoleaf_ts*"]
