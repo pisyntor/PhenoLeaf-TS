@@ -1,9 +1,442 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Website</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhenoLeaf-TS &middot; A Time-Series Benchmark for Leaf Instance Segmentation, Tracking &amp; Growth Stage Classification</title>
+  <meta name="description" content="PhenoLeaf-TS: a time-series dataset of 17,082 top-down RGB images across 21 Arabidopsis thaliana genotypes for leaf instance segmentation, tracking, and growth stage classification. ECCV 2026." />
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:title" content="PhenoLeaf-TS — Time-Series Leaf Segmentation, Tracking & Growth Benchmark" />
+  <meta property="og:description" content="17,082 RGB images · 21 Arabidopsis genotypes · 318 replicates · temporally consistent leaf instance masks. ECCV 2026." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/img/fig1.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Play CDN (build-free, GitHub Pages compatible) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          },
+          colors: {
+            leaf: {
+              50:  '#f1f8f1',
+              100: '#dceede',
+              200: '#bcdcc0',
+              300: '#8fc197',
+              400: '#5ba066',
+              500: '#3a8246',
+              600: '#2b6837',
+              700: '#24532e',
+              800: '#204228',
+              900: '#1b3722',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { scroll-padding-top: 5rem; }
+    /* Soft botanical backdrop — avoids the plain-white look (review Comment-2) */
+    .page-bg {
+      background-color: #f6faf6;
+      background-image:
+        radial-gradient(60rem 40rem at 80% -10%, rgba(91,160,102,0.16), transparent 60%),
+        radial-gradient(50rem 35rem at -10% 5%, rgba(36,83,46,0.10), transparent 55%);
+    }
+    .leaf-stripe {
+      background: linear-gradient(90deg,
+        #e53935 0 9.09%, #3949ab 9.09% 18.18%, #cddc39 18.18% 27.27%,
+        #43a047 27.27% 36.36%, #fb8c00 36.36% 45.45%, #d81b60 45.45% 54.54%,
+        #00897b 54.54% 63.63%, #5e35b1 63.63% 72.72%, #8bc34a 72.72% 81.81%,
+        #fdd835 81.81% 90.90%, #6d4c41 90.90% 100%);
+    }
+    .anchor-offset { scroll-margin-top: 5rem; }
+  </style>
 </head>
-<body>
-  <h1>Hello, website is here!</h1>
+
+<body class="page-bg font-sans text-slate-800 antialiased">
+
+  <!-- ===================== NAV ===================== -->
+  <header class="sticky top-0 z-50 border-b border-leaf-100/70 bg-white/75 backdrop-blur-md">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+      <a href="#top" class="flex items-center gap-2 font-extrabold tracking-tight text-leaf-800">
+        <span class="inline-block h-5 w-5 rounded-sm leaf-stripe" aria-hidden="true"></span>
+        PhenoLeaf-TS
+      </a>
+      <ul class="hidden items-center gap-7 text-sm font-medium text-slate-600 md:flex">
+        <li><a class="transition hover:text-leaf-700" href="#overview">Overview</a></li>
+        <li><a class="transition hover:text-leaf-700" href="#dataset">Dataset</a></li>
+        <li><a class="transition hover:text-leaf-700" href="#comparison">Comparison</a></li>
+        <li><a class="transition hover:text-leaf-700" href="#citation">Citation</a></li>
+        <li><a class="transition hover:text-leaf-700" href="#contact">Contact</a></li>
+      </ul>
+      <a href="https://github.com/pisyntor/PhenoLeaf-TS" target="_blank" rel="noopener"
+         class="rounded-full bg-leaf-700 px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:bg-leaf-800">
+        Code
+      </a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="relative overflow-hidden">
+      <div class="mx-auto max-w-5xl px-5 pb-12 pt-16 text-center sm:pt-20">
+        <h1 class="text-4xl font-extrabold tracking-tight text-leaf-900 sm:text-6xl">
+          PhenoLeaf&#8209;TS
+        </h1>
+        <p class="mx-auto mt-4 max-w-3xl text-lg font-medium text-slate-600 sm:text-xl">
+          A Time-Series Benchmark for Leaf Instance Segmentation, Tracking, and Growth&nbsp;Stage&nbsp;Classification
+        </p>
+
+        <span class="mt-6 inline-flex items-center gap-2 rounded-full border border-leaf-200 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-leaf-700">
+          European Conference on Computer Vision (ECCV) 2026
+        </span>
+
+        <!-- Authors -->
+        <div class="mx-auto mt-8 max-w-3xl text-base text-slate-700">
+          <p class="font-medium">
+            Rijad Sarić<sup class="text-leaf-600">1,&#42;</sup>&ensp;
+            Basim Azam<sup class="text-leaf-600">2</sup>&ensp;
+            Sarmad Khan<sup class="text-leaf-600">3</sup>&ensp;
+            Edhem Čustović<sup class="text-leaf-600">4</sup>
+          </p>
+          <div class="mt-3 space-y-0.5 text-sm text-slate-500">
+            <p><sup>1</sup> ARC Research Hub for Protected Cropping (PC Hub), La Trobe University, Melbourne, Australia</p>
+            <p><sup>2</sup> School of Computing and Information Systems, The University of Melbourne, Melbourne, Australia</p>
+            <p><sup>3</sup> Department of Computer Science, Technological University Dublin, Ireland</p>
+            <p><sup>4</sup> Photon Systems Instruments (PSI), Drásov, Czech Republic</p>
+            <p class="pt-1 italic"><sup>&#42;</sup> Corresponding author</p>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <a href="https://eccv.ecva.net/" target="_blank" rel="noopener"
+             class="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-lg">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            View Paper
+          </a>
+          <a href="https://github.com/pisyntor/PhenoLeaf-TS" target="_blank" rel="noopener"
+             class="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-lg">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.06 11.06 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg>
+            Code
+          </a>
+          <a href="https://figshare.com/" target="_blank" rel="noopener"
+             class="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-lg">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+            Dataset
+          </a>
+          <a href="#citation"
+             class="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-lg">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 4v4h4"/><path d="M9 13l-1.5 1.5L9 16"/><path d="M13 13l1.5 1.5L13 16"/></svg>
+            BibTeX
+          </a>
+        </div>
+      </div>
+
+      <!-- thin botanical palette divider -->
+      <div class="mx-auto h-1.5 max-w-5xl rounded-full leaf-stripe opacity-80"></div>
+    </section>
+
+    <!-- ===================== OVERVIEW ===================== -->
+    <section id="overview" class="anchor-offset mx-auto max-w-5xl px-5 py-14">
+      <h2 class="text-2xl font-bold text-leaf-900 sm:text-3xl">Overview</h2>
+      <div class="mt-5 space-y-4 text-lg leading-relaxed text-slate-700">
+        <p>
+          Image-based high-throughput plant phenotyping benefits greatly from an instance-level understanding of how
+          individual leaves grow over experimental time. Yet existing datasets lack the temporal depth and annotation
+          consistency needed to jointly benchmark segmentation, tracking, and growth stage classification.
+        </p>
+        <p>
+          We introduce <strong class="text-leaf-800">PhenoLeaf-TS</strong>, a time-series dataset of
+          <strong>17,082</strong> top-down RGB images spanning <strong>21</strong> <em>Arabidopsis thaliana</em>
+          genotypes, totalling <strong>318</strong> plant replicates, each annotated with colour-coded leaf instance
+          masks that maintain a consistent identity throughout the growth sequence. We define three benchmark
+          computer-vision tasks with standardised protocols and evaluate <strong>21</strong> distinct models:
+          9 instance-segmentation architectures, 6 multi-object trackers, and 6 classification architectures.
+        </p>
+      </div>
+
+      <!-- Highlights -->
+      <h3 class="mt-12 text-xl font-bold text-leaf-900">Highlights</h3>
+      <ul class="mt-5 grid gap-4 sm:grid-cols-2">
+        <li class="flex gap-3 rounded-2xl border border-leaf-100 bg-white/80 p-5 shadow-sm">
+          <span class="mt-0.5 text-leaf-600" aria-hidden="true">&#10003;</span>
+          <p>17,082 RGB images · 21 <em>Arabidopsis</em> genotypes · 318 plant replicates · ~530×525&nbsp;px</p>
+        </li>
+        <li class="flex gap-3 rounded-2xl border border-leaf-100 bg-white/80 p-5 shadow-sm">
+          <span class="mt-0.5 text-leaf-600" aria-hidden="true">&#10003;</span>
+          <p>Temporally consistent, colour-coded leaf instance masks (fixed 31-colour palette)</p>
+        </li>
+        <li class="flex gap-3 rounded-2xl border border-leaf-100 bg-white/80 p-5 shadow-sm">
+          <span class="mt-0.5 text-leaf-600" aria-hidden="true">&#10003;</span>
+          <p>Three tasks in one dataset: instance segmentation, leaf tracking, growth stage classification</p>
+        </li>
+        <li class="flex gap-3 rounded-2xl border border-leaf-100 bg-white/80 p-5 shadow-sm">
+          <span class="mt-0.5 text-leaf-600" aria-hidden="true">&#10003;</span>
+          <p>21 baseline models benchmarked under standardised protocols</p>
+        </li>
+        <li class="flex gap-3 rounded-2xl border border-leaf-100 bg-white/80 p-5 shadow-sm">
+          <span class="mt-0.5 text-leaf-600" aria-hidden="true">&#10003;</span>
+          <p>First dataset to combine large-scale time-series imagery, per-leaf instance labels, tracking, and growth stages</p>
+        </li>
+        <li class="flex gap-3 rounded-2xl border border-leaf-100 bg-white/80 p-5 shadow-sm">
+          <span class="mt-0.5 text-leaf-600" aria-hidden="true">&#10003;</span>
+          <p>Demonstrated value as a pre-training source: up to <strong>+51.4 mAP</strong> fine-tuning gain on external datasets</p>
+        </li>
+      </ul>
+
+      <!-- Figure 1 -->
+      <figure class="mt-12 overflow-hidden rounded-2xl border border-leaf-100 bg-white p-3 shadow-sm">
+        <img src="assets/img/fig1.png" alt="Overview of PhenoLeaf-TS: representative samples across genotypes and a temporal sequence of a single plant with persistent leaf colours." class="mx-auto w-full rounded-lg" loading="lazy" />
+        <figcaption class="px-2 pt-4 text-sm text-slate-500">
+          <strong class="text-slate-700">Figure 1.</strong> Overview of PhenoLeaf-TS. (a) Representative samples across
+          seven genotypes: raw RGB (first row), colour-coded leaf instance labels (second row), and overlays (third row).
+          (b) Temporal sequence of a single plant (Day&nbsp;1–22); leaf colours persist across frames.
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ===================== DATASET ===================== -->
+    <section id="dataset" class="anchor-offset border-y border-leaf-100 bg-white/50">
+      <div class="mx-auto max-w-5xl px-5 py-14">
+        <h2 class="text-2xl font-bold text-leaf-900 sm:text-3xl">The Dataset</h2>
+
+        <!-- Data Collection -->
+        <h3 class="mt-8 text-xl font-bold text-leaf-800">Data Collection</h3>
+        <p class="mt-4 text-lg leading-relaxed text-slate-700">
+          Phenotyping experiments used 21 <em>Arabidopsis thaliana</em> genotypes grown in an environmentally controlled
+          growth chamber, imaged from above at regular intervals (2 or 4 images per day) with a commercial 4.92&nbsp;MP RGB
+          camera on an automated gantry designed by
+          <a class="font-medium text-leaf-700 underline decoration-leaf-300 underline-offset-2 hover:text-leaf-800" href="http://www.psi.cz" target="_blank" rel="noopener">Photon Systems Instruments</a>
+          /
+          <a class="font-medium text-leaf-700 underline decoration-leaf-300 underline-offset-2 hover:text-leaf-800" href="https://scientificaustralia.com.au" target="_blank" rel="noopener">Scientific Instruments Australia</a>.
+          Each of the 318 plant replicates was recorded as a separate image sequence capturing the full growth trajectory
+          from seedling emergence to a mature rosette. Images are ~530×525&nbsp;px with the plant centred against a soil background.
+        </p>
+
+        <!-- Looping video -->
+        <figure class="mt-6 overflow-hidden rounded-2xl border border-leaf-100 bg-slate-900 shadow-sm">
+          <video class="mx-auto w-full" autoplay loop muted playsinline poster="assets/img/video_poster.jpg">
+            <source src="assets/video/demo.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </figure>
+        <p class="mt-2 text-center text-sm text-slate-500">Time-lapse growth sequence of an <em>Arabidopsis</em> replicate (looping).</p>
+
+        <!-- Annotation Protocol -->
+        <h3 class="mt-12 text-xl font-bold text-leaf-800">Annotation Protocol</h3>
+        <p class="mt-4 text-lg leading-relaxed text-slate-700">
+          Leaf instance masks were manually annotated in
+          <a class="font-medium text-leaf-700 underline decoration-leaf-300 underline-offset-2 hover:text-leaf-800" href="https://www.cvat.ai" target="_blank" rel="noopener">CVAT</a>
+          using a fixed palette of 31 perceptually distinct colours. The first leaf to appear is assigned colour 1 (red),
+          the second colour 2 (blue), and so on by a deterministic ordering. When a new leaf emerges, it receives the next
+          colour in the sequence. The same physical leaf therefore retains the same colour label across all frames in which
+          it appears, so tracking accuracy can be measured directly against the colour-coded ground truth without a
+          Hungarian matching step. All annotations underwent a two-pass quality-control review.
+        </p>
+
+        <!-- Dataset Statistics -->
+        <h3 class="mt-12 text-xl font-bold text-leaf-800">Dataset Statistics</h3>
+        <div class="mt-5 grid gap-6 lg:grid-cols-5">
+          <div class="lg:col-span-2">
+            <div class="overflow-hidden rounded-2xl border border-leaf-100 bg-white shadow-sm">
+              <table class="w-full text-left text-sm">
+                <thead class="bg-leaf-50 text-leaf-800">
+                  <tr><th class="px-4 py-2.5 font-semibold">Statistic</th><th class="px-4 py-2.5 font-semibold">Value</th></tr>
+                </thead>
+                <tbody class="divide-y divide-leaf-50">
+                  <tr><td class="px-4 py-2.5 text-slate-600">Genotypes</td><td class="px-4 py-2.5 font-medium">21</td></tr>
+                  <tr><td class="px-4 py-2.5 text-slate-600">Plant replicates</td><td class="px-4 py-2.5 font-medium">318</td></tr>
+                  <tr><td class="px-4 py-2.5 text-slate-600">Total images</td><td class="px-4 py-2.5 font-medium">17,082</td></tr>
+                  <tr><td class="px-4 py-2.5 text-slate-600">Resolution</td><td class="px-4 py-2.5 font-medium">~530 × 525</td></tr>
+                  <tr><td class="px-4 py-2.5 text-slate-600">Frames / replicate</td><td class="px-4 py-2.5 font-medium">53.7</td></tr>
+                  <tr><td class="px-4 py-2.5 text-slate-600">Leaves / image</td><td class="px-4 py-2.5 font-medium">9.7</td></tr>
+                  <tr><td class="px-4 py-2.5 text-slate-600">Min / max leaves</td><td class="px-4 py-2.5 font-medium">4 / 26</td></tr>
+                  <tr><td class="px-4 py-2.5 text-slate-600">Growth stages</td><td class="px-4 py-2.5 font-medium">3</td></tr>
+                  <tr><td class="px-4 py-2.5 text-slate-600">Leaf unique colours</td><td class="px-4 py-2.5 font-medium">31</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="lg:col-span-3">
+            <div class="flex h-full flex-col justify-center rounded-2xl border border-leaf-100 bg-white p-6 shadow-sm">
+              <p class="text-lg leading-relaxed text-slate-700">
+                Growth stages are defined by leaf count: <strong>Early</strong> (4–6 leaves, 22.6%),
+                <strong>Intermediate</strong> (7–10 leaves, 39.8%), and <strong>Mature</strong> (11+ leaves, 37.6%).
+                Labels are derived automatically by counting unique leaf regions per frame.
+              </p>
+              <div class="mt-5">
+                <div class="flex overflow-hidden rounded-lg text-center text-xs font-semibold text-white">
+                  <div class="bg-leaf-400 py-2" style="width:22.6%" title="Early 22.6%">22.6%</div>
+                  <div class="bg-leaf-600 py-2" style="width:39.8%" title="Intermediate 39.8%">39.8%</div>
+                  <div class="bg-leaf-800 py-2" style="width:37.6%" title="Mature 37.6%">37.6%</div>
+                </div>
+                <div class="mt-2 flex justify-between text-xs text-slate-500">
+                  <span>Early</span><span>Intermediate</span><span>Mature</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Figure 2 -->
+        <figure class="mt-10 overflow-hidden rounded-2xl border border-leaf-100 bg-white p-3 shadow-sm">
+          <img src="assets/img/fig2.png" alt="Dataset statistics: leaf-count distribution, images per genotype, growth-stage distribution, and the 31-colour annotation palette." class="mx-auto w-full rounded-lg" loading="lazy" />
+          <figcaption class="px-2 pt-4 text-sm text-slate-500">
+            <strong class="text-slate-700">Figure 2.</strong> Dataset statistics. (a) Leaf-count distribution (mean 9.7,
+            range 4–26). (b) Images per genotype. (c) Growth-stage distribution. (d) The 31-colour annotation palette.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== COMPARISON ===================== -->
+    <section id="comparison" class="anchor-offset mx-auto max-w-5xl px-5 py-14">
+      <h2 class="text-2xl font-bold text-leaf-900 sm:text-3xl">Comparison with Other Public Plant Datasets</h2>
+      <p class="mt-4 text-lg leading-relaxed text-slate-700">
+        PhenoLeaf-TS is the only public top-view RGB phenotyping dataset providing temporally consistent instance labels
+        that enable joint evaluation of segmentation, tracking, and growth stage classification
+        (<span class="font-semibold text-leaf-700">✓</span> = supported, <span class="font-semibold text-slate-400">–</span> = not).
+      </p>
+
+      <div class="mt-6 overflow-x-auto rounded-2xl border border-leaf-100 bg-white shadow-sm">
+        <table class="w-full min-w-[760px] text-left text-sm">
+          <thead class="bg-leaf-50 text-leaf-800">
+            <tr>
+              <th class="px-4 py-3 font-semibold">Dataset</th>
+              <th class="px-4 py-3 font-semibold">Species</th>
+              <th class="px-4 py-3 font-semibold">Images</th>
+              <th class="px-4 py-3 font-semibold">Instance</th>
+              <th class="px-4 py-3 font-semibold">Time-series</th>
+              <th class="px-4 py-3 font-semibold">Tracking</th>
+              <th class="px-4 py-3 font-semibold">Growth</th>
+              <th class="px-4 py-3 font-semibold">Public</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-leaf-50 [&_td]:px-4 [&_td]:py-2.5">
+            <tr><td>Ara2012</td><td><em>A. thaliana</em></td><td>120</td><td class="text-leaf-600">✓</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-leaf-600">✓</td></tr>
+            <tr><td>Ara2013</td><td><em>A. thaliana</em></td><td>27</td><td class="text-leaf-600">✓</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-leaf-600">✓</td></tr>
+            <tr><td>Ara2014</td><td><em>A. thaliana</em></td><td>168</td><td class="text-leaf-600">✓</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-leaf-600">✓</td></tr>
+            <tr><td>Tobacco</td><td>Tobacco</td><td>89</td><td class="text-leaf-600">✓</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-leaf-600">✓</td></tr>
+            <tr><td>MSU-PID</td><td><em>A. thaliana</em>/Bean</td><td>2,000+</td><td>Partial</td><td class="text-leaf-600">✓</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-leaf-600">✓</td></tr>
+            <tr><td>Komatsuna</td><td>Komatsuna</td><td>900</td><td class="text-leaf-600">✓</td><td class="text-leaf-600">✓</td><td class="text-leaf-600">✓</td><td class="text-slate-300">–</td><td class="text-leaf-600">✓</td></tr>
+            <tr><td>PhenoBench</td><td>Sugar beet</td><td>1,500+</td><td>Panoptic</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-slate-300">–</td><td class="text-leaf-600">✓</td></tr>
+            <tr class="bg-leaf-50/60 font-semibold text-leaf-900">
+              <td>PhenoLeaf-TS (Ours)</td><td><em>A. thaliana</em> (21)</td><td>17,082</td>
+              <td class="text-leaf-700">✓</td><td class="text-leaf-700">✓</td><td class="text-leaf-700">✓</td><td class="text-leaf-700">✓</td><td class="text-leaf-700">✓</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== CITATION ===================== -->
+    <section id="citation" class="anchor-offset border-y border-leaf-100 bg-white/50">
+      <div class="mx-auto max-w-5xl px-5 py-14">
+        <div class="flex items-center justify-between gap-4">
+          <h2 class="text-2xl font-bold text-leaf-900 sm:text-3xl">Citation</h2>
+          <button id="copy-bibtex" type="button"
+                  class="inline-flex items-center gap-2 rounded-full border border-leaf-200 bg-white px-4 py-2 text-sm font-semibold text-leaf-700 shadow-sm transition hover:bg-leaf-50">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span id="copy-label">Copy</span>
+          </button>
+        </div>
+        <p class="mt-4 text-lg text-slate-700">If you use PhenoLeaf-TS, please cite:</p>
+        <pre class="mt-4 overflow-x-auto rounded-2xl bg-slate-900 p-5 font-mono text-sm leading-relaxed text-leaf-100"><code id="bibtex">@inproceedings{saric2026phenoleafts,
+  title     = {PhenoLeaf-TS: A Time-Series Benchmark for Leaf Instance
+               Segmentation, Tracking, and Growth Stage Classification},
+  author    = {Sari\'c, Rijad and Azam, Basim and Khan, Sarmad and \v{C}ustovi\'c, Edhem},
+  booktitle = {Proceedings of the European Conference on Computer Vision (ECCV)},
+  year      = {2026}
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ===================== ACKNOWLEDGEMENTS ===================== -->
+    <section id="acknowledgements" class="anchor-offset mx-auto max-w-5xl px-5 py-14">
+      <h2 class="text-2xl font-bold text-leaf-900 sm:text-3xl">Acknowledgements</h2>
+      <div class="mt-5 space-y-4 text-base leading-relaxed text-slate-600">
+        <p>
+          The authors gratefully acknowledge the valuable support and collaboration of Prof. Jim Whelan and Zhejiang
+          University. We also sincerely thank Prof. Mathew G. Lewsey from the Australian Plant Phenomics Network (APPN)
+          node at La Trobe University, as well as Prof. Tony Bacic and Dr. Veronica Borret from the La Trobe Institute for
+          Sustainable Agriculture and Food (LISAF) and the ARC Research Hub for Protected Cropping, La Trobe University,
+          for their guidance, expertise, and continued support throughout this work. We extend our appreciation to Martin
+          Trtilek, Klara Panzarova, Ivan Kashkan, and Sajid Ullah from Photon Systems Instruments for their technical
+          support, collaboration, and assistance with plant phenotyping systems and data-related activities. Their
+          contributions, expertise, and collaborative input have been highly valuable in supporting the development and
+          completion of this research.
+        </p>
+        <p>
+          This work was supported by the Australian Research Council Industrial Transformation Research Hub for Medicinal
+          Agriculture (ARC MedAg Hub) through Grant Number
+          <a class="font-medium text-leaf-700 underline decoration-leaf-300 underline-offset-2 hover:text-leaf-800" href="https://dataportal.arc.gov.au/NCGP/Web/Grant/Grant/IH180100006" target="_blank" rel="noopener">IH180100006</a>
+          and the ARC Industrial Transformation Research Hub for Protected Cropping (PC Hub) through Grant Number
+          <a class="font-medium text-leaf-700 underline decoration-leaf-300 underline-offset-2 hover:text-leaf-800" href="https://dataportal.arc.gov.au/RGS/Web/Grants/IH240100024" target="_blank" rel="noopener">IH240100024</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="anchor-offset border-t border-leaf-100 bg-leaf-900 text-leaf-50">
+      <div class="mx-auto max-w-5xl px-5 py-14 text-center">
+        <h2 class="text-2xl font-bold sm:text-3xl">Contact</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-leaf-100/90">
+          For any inquiries related to the dataset on this website, please contact us via email:
+        </p>
+        <a href="mailto:r.saric@latrobe.edu.au?subject=PhenoLeaf-TS%20inquiry"
+           class="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-leaf-900 shadow-md transition hover:-translate-y-0.5 hover:shadow-lg">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+          r.saric@latrobe.edu.au
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-leaf-900 text-leaf-100/70">
+    <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 border-t border-leaf-800 px-5 py-6 text-sm sm:flex-row">
+      <p>© 2026 PhenoLeaf-TS · ECCV 2026</p>
+      <div class="flex gap-5">
+        <a class="transition hover:text-white" href="https://github.com/pisyntor/PhenoLeaf-TS" target="_blank" rel="noopener">GitHub</a>
+        <a class="transition hover:text-white" href="https://figshare.com/" target="_blank" rel="noopener">Dataset</a>
+        <a class="transition hover:text-white" href="#citation">BibTeX</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Copy BibTeX to clipboard
+    (function () {
+      const btn = document.getElementById('copy-bibtex');
+      const label = document.getElementById('copy-label');
+      const code = document.getElementById('bibtex');
+      if (!btn || !code) return;
+      btn.addEventListener('click', async function () {
+        try {
+          await navigator.clipboard.writeText(code.innerText);
+          label.textContent = 'Copied!';
+          setTimeout(function () { label.textContent = 'Copy'; }, 2000);
+        } catch (e) {
+          label.textContent = 'Press Ctrl+C';
+          setTimeout(function () { label.textContent = 'Copy'; }, 2000);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
