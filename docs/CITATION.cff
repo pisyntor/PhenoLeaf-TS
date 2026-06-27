@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use PhenoLeaf-TS, please cite the ECCV 2026 paper."
+title: "PhenoLeaf-TS: A Time-Series Benchmark for Leaf Instance Segmentation, Tracking, and Growth Stage Classification"
+authors:
+  - family-names: "Sarić"
+    given-names: "Rijad"
+  - family-names: "Azam"
+    given-names: "Basim"
+  - family-names: "Khan"
+    given-names: "Sarmad"
+  - family-names: "Čustović"
+    given-names: "Edhem"
+preferred-citation:
+  type: conference-paper
+  title: "PhenoLeaf-TS: A Time-Series Benchmark for Leaf Instance Segmentation, Tracking, and Growth Stage Classification"
+  authors:
+    - family-names: "Sarić"
+      given-names: "Rijad"
+    - family-names: "Azam"
+      given-names: "Basim"
+    - family-names: "Khan"
+      given-names: "Sarmad"
+    - family-names: "Čustović"
+      given-names: "Edhem"
+  collection-title: "Computer Vision – ECCV 2026"
+  conference:
+    name: "European Conference on Computer Vision (ECCV)"
+  publisher:
+    name: "Springer Nature Switzerland"
+  year: 2026

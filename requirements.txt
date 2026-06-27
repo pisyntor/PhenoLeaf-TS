@@ -1,0 +1,81 @@
+# LeafInstanceLabels Benchmark - Dependencies
+# =============================================
+# ECCV 2026 Paper: Leaf Instance Segmentation, Tracking, and Growth Stage Classification
+
+# Core Scientific
+numpy>=1.24.0
+scipy>=1.11.0
+pandas>=2.0.0
+Pillow>=10.0.0
+PyYAML>=6.0
+scikit-learn>=1.3.0
+scikit-image>=0.21.0  # For mask_to_polygon
+matplotlib>=3.7.0
+seaborn>=0.12.0
+tqdm>=4.65.0
+openpyxl>=3.1.0  # For reading Excel metadata
+
+# PyTorch (install with CUDA support as needed)
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+torch>=2.1.0
+torchvision>=0.16.0
+torchmetrics>=1.2.0
+
+# Instance Segmentation Frameworks
+ultralytics>=8.1.0         # YOLOv11, YOLO26, BoTSORT integration
+
+# Detectron2 - Install from source:
+# pip install 'git+https://github.com/facebookresearch/detectron2.git'
+
+# MMDetection - Install via mim:
+# pip install -U openmim
+# mim install mmengine mmcv mmdet
+
+# SAM2 - Install from source:
+# pip install 'git+https://github.com/facebookresearch/sam2.git'
+
+# SAM3 - Install from source (released Nov 2025):
+# pip install 'git+https://github.com/facebookresearch/sam3.git'
+
+# Tracking
+motmetrics>=1.4.0          # MOT evaluation metrics
+# deep-sort-realtime>=1.3   # DeepSORT tracker
+# norfair>=2.2.0            # Norfair tracker
+# OC-SORT: clone from https://github.com/noahcao/OC_SORT
+
+# COCO Evaluation
+pycocotools>=2.0.7
+
+# Visualization
+opencv-python>=4.8.0
+
+# Optional: Experiment Tracking
+# wandb>=0.15.0
+# tensorboard>=2.14.0
+
+# =============================================
+# Installation Instructions
+# =============================================
+#
+# 1. Create conda environment:
+#    conda create -n leafbench python=3.10 -y
+#    conda activate leafbench
+#
+# 2. Install PyTorch with CUDA:
+#    pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#
+# 3. Install core dependencies:
+#    pip install -r requirements.txt
+#
+# 4. Install Detectron2 (for Mask R-CNN):
+#    pip install 'git+https://github.com/facebookresearch/detectron2.git'
+#
+# 5. Install MMDetection (for Mask2Former):
+#    pip install -U openmim
+#    mim install mmengine mmcv mmdet
+#
+# 6. Install SAM2:
+#    pip install 'git+https://github.com/facebookresearch/sam2.git'
+#
+# 7. Install trackers:
+#    pip install deep-sort-realtime norfair

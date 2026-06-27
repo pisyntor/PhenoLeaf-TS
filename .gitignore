@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Data, outputs, checkpoints (not versioned) — anchored to repo root
+/data/
+/outputs/
+/checkpoints/
+*.pt
+*.pth
+
+# Env / OS
+.venv/
+venv/
+.env
+.DS_Store
+*.log

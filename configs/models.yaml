@@ -1,0 +1,29 @@
+# PhenoLeaf-TS baseline model registry.
+# metric column: segmentation = mask mAP, tracking = MOTA (%), classification = accuracy (%).
+
+segmentation:
+  - {id: IS-1, name: YOLOv11-seg,        backbone: CSPDarknet-X, framework: ultralytics, metric: 68.2}
+  - {id: IS-2, name: YOLO26-seg,         backbone: CSPDarknet-L, framework: ultralytics, metric: 67.3}
+  - {id: IS-3, name: Mask R-CNN,         backbone: R50-FPN,      framework: detectron2,  metric: 73.2}
+  - {id: IS-4, name: Mask R-CNN,         backbone: R101-FPN,     framework: detectron2,  metric: 72.4}
+  - {id: IS-5, name: Mask R-CNN,         backbone: X101-FPN,     framework: detectron2,  metric: 71.3}
+  - {id: IS-6, name: Cascade Mask R-CNN, backbone: R50-FPN,      framework: detectron2,  metric: 71.9}
+  - {id: IS-7, name: SAM2 (AMG),         backbone: Hiera-L,      framework: sam2,        metric: 55.0}
+  - {id: IS-8, name: Mask2Former,        backbone: Swin-L,       framework: detectron2,  metric: 71.9}
+  - {id: IS-9, name: Grounded SAM2,      backbone: Hiera-L,      framework: sam2,        metric: 71.1}
+
+tracking:        # tracking-by-detection on IS-1 (YOLOv11) detections, via BoxMOT
+  - {id: TR-1, name: BoTSORT,      framework: boxmot, metric: 83.1}
+  - {id: TR-2, name: DeepSORT,     framework: boxmot, metric: 68.4}
+  - {id: TR-3, name: Deep-OC-SORT, framework: boxmot, metric: 66.1}
+  - {id: TR-4, name: Norfair,      framework: norfair, metric: 57.8}
+  - {id: TR-5, name: ByteTrack,    framework: boxmot, metric: 84.1}
+  - {id: TR-6, name: StrongSORT,   framework: boxmot, metric: 64.2}
+
+classification:  # input 224x224, 3 classes (Early / Intermediate / Mature)
+  - {id: CL-1, name: ResNet-50,        timm_id: resnet50,                          metric: 89.4}
+  - {id: CL-2, name: ResNet-101,       timm_id: resnet101,                         metric: 89.7}
+  - {id: CL-3, name: EfficientNetV2-S, timm_id: tf_efficientnetv2_s,               metric: 91.4}
+  - {id: CL-4, name: ViT-B/16,         timm_id: vit_base_patch16_224,              metric: 85.1}
+  - {id: CL-5, name: DINOv2-B,         timm_id: vit_base_patch14_dinov2,           metric: 87.1}
+  - {id: CL-6, name: Swin-T,           timm_id: swin_tiny_patch4_window7_224,      metric: 91.7}
