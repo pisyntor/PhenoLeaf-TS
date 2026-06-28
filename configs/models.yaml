@@ -2,9 +2,9 @@
 # metric column: segmentation = mask mAP, tracking = MOTA (%), classification = accuracy (%).
 
 segmentation:
-  - {id: IS-1, name: YOLOv11-seg,        backbone: CSPDarknet-X, framework: ultralytics, metric: 68.2}
+  - {id: IS-1, name: YOLOv11-seg,        backbone: CSPDarknet-X, framework: ultralytics, metric: 68.2, weights: IS-1_yolov11_seg.pt}
   - {id: IS-2, name: YOLO26-seg,         backbone: CSPDarknet-L, framework: ultralytics, metric: 67.3}
-  - {id: IS-3, name: Mask R-CNN,         backbone: R50-FPN,      framework: detectron2,  metric: 73.2}
+  - {id: IS-3, name: Mask R-CNN,         backbone: R50-FPN,      framework: detectron2,  metric: 73.2, weights: IS-3_mask_rcnn_r50.pth}
   - {id: IS-4, name: Mask R-CNN,         backbone: R101-FPN,     framework: detectron2,  metric: 72.4}
   - {id: IS-5, name: Mask R-CNN,         backbone: X101-FPN,     framework: detectron2,  metric: 71.3}
   - {id: IS-6, name: Cascade Mask R-CNN, backbone: R50-FPN,      framework: detectron2,  metric: 71.9}
@@ -26,4 +26,4 @@ classification:  # input 224x224, 3 classes (Early / Intermediate / Mature)
   - {id: CL-3, name: EfficientNetV2-S, timm_id: tf_efficientnetv2_s,               metric: 91.4}
   - {id: CL-4, name: ViT-B/16,         timm_id: vit_base_patch16_224,              metric: 85.1}
   - {id: CL-5, name: DINOv2-B,         timm_id: vit_base_patch14_dinov2,           metric: 87.1}
-  - {id: CL-6, name: Swin-T,           timm_id: swin_tiny_patch4_window7_224,      metric: 91.7}
+  - {id: CL-6, name: Swin-T,           timm_id: swin_tiny_patch4_window7_224,      metric: 91.7, weights: CL-6_swin_t.pth}

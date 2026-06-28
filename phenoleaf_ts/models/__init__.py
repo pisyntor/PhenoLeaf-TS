@@ -38,14 +38,27 @@ def get_spec(model_id):
     raise KeyError(f"Unknown model id: {model_id}")
 
 
-def load_model(model_id, checkpoint, device="cuda", **kwargs):
-    """Load a baseline by id from a released checkpoint.
+def download_weights(model_id):
+    """Download a model's released checkpoint from the HF Hub (basimazam/PhenoLeaf-TS-models)."""
+    from huggingface_hub import hf_hub_download
+    from phenoleaf_ts import HF_MODELS
+    spec = get_spec(model_id)
+    if not spec.get("weights"):
+        raise ValueError(f"No released weights for {model_id}.")
+    return hf_hub_download(HF_MODELS, spec["weights"])
 
-    Dispatches to the appropriate framework loader (Ultralytics / Detectron2 / timm /
-    BoxMOT). Frameworks are imported lazily so only the one you use is required.
+
+def load_model(model_id, checkpoint=None, device="cuda", **kwargs):
+    """Load a baseline by id.
+
+    If ``checkpoint`` is omitted and the model has released weights, they are pulled
+    from the HF Hub automatically. Dispatches to the appropriate framework loader
+    (Ultralytics / Detectron2 / timm); frameworks are imported lazily.
     """
     spec = get_spec(model_id)
     fw = spec.get("framework")
+    if checkpoint is None:
+        checkpoint = download_weights(model_id)
 
     if fw == "ultralytics":
         from ultralytics import YOLO

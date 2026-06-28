@@ -7,6 +7,7 @@
 <p align="center">
   <a href="#"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-coming%20soon-b31b1b?logo=arxiv&logoColor=white"></a>
   <a href="https://huggingface.co/datasets/rick77a/PhenoLeaf_TS"><img alt="HF Dataset" src="https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-PhenoLeaf--TS-ffcc4d"></a>
+  <a href="https://huggingface.co/basimazam/PhenoLeaf-TS-models"><img alt="HF Models" src="https://img.shields.io/badge/%F0%9F%A4%97%20Models-PhenoLeaf--TS-ff9d2e"></a>
   <a href="https://pisyntor.github.io/PhenoLeaf-TS/"><img alt="Project Page" src="https://img.shields.io/badge/Project-Page-2ea44f"></a>
   <a href="https://eccv.ecva.net/"><img alt="ECCV 2026" src="https://img.shields.io/badge/ECCV-2026-1b3b6f"></a>
   <a href="https://creativecommons.org/licenses/by/4.0/"><img alt="License" src="https://img.shields.io/badge/License-CC%20BY%204.0-blue"></a>
@@ -72,10 +73,15 @@ All 21 baselines sit in a small registry ([`configs/models.yaml`](configs/models
 ```python
 from phenoleaf_ts.models import list_models, load_model
 
-list_models("segmentation")                                       # browse the registry
-seg = load_model("IS-3", checkpoint="checkpoints/IS-3_maskrcnn_r50.pth")   # Detectron2
-clf = load_model("CL-6", checkpoint="checkpoints/CL-6_swin_t.pth")         # timm (Swin-T)
+list_models("segmentation")          # browse the registry
+seg = load_model("IS-3")             # Mask R-CNN R50 — weights auto-downloaded from the HF Hub
+clf = load_model("CL-6")             # Swin-T
 ```
+
+Released checkpoints — **IS-3** (Mask R-CNN R50), **CL-6** (Swin-T), and the **IS-1** YOLOv11 detector used
+for tracking — are on the Hub at
+[🤗 basimazam/PhenoLeaf-TS-models](https://huggingface.co/basimazam/PhenoLeaf-TS-models) and load
+automatically when you omit `checkpoint`.
 
 Metrics are in [`phenoleaf_ts/metrics`](phenoleaf_ts/metrics):
 

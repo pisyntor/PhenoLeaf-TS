@@ -10,5 +10,6 @@ __version__ = "0.1.0"
 
 HF_DATASET = "rick77a/PhenoLeaf_TS"
 HF_DATASET_ZIP = "PhenoLeaf-TS_DS.zip"
+HF_MODELS = "basimazam/PhenoLeaf-TS-models"
 
 from phenoleaf_ts import data, metrics, models  # noqa: E402,F401
