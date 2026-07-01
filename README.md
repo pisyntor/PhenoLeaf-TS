@@ -123,6 +123,10 @@ docs/           DATASET.md · CITATION.cff
 }
 ```
 
+## Acknowledgements
+
+This work was supported by the Australian Research Council Industrial Transformation Research Hub for Medicinal Agriculture (ARC MedAg Hub) through Grant Number IH180100006 and the ARC Industrial Transformation Research Hub for Protected Cropping (PC Hub) through Grant Number IH240100024.
+
 ## License
 
 Code is Apache-2.0. The dataset is released under CC BY 4.0.
