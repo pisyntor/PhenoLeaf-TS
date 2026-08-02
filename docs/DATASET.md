@@ -26,8 +26,8 @@ background.
 
 Leaf instance masks were manually annotated in CVAT using a fixed palette of 31 perceptually distinct
 colours. Leaves are coloured in a deterministic order of appearance (first leaf = colour 1, etc.); a
-new leaf takes the next colour in the sequence. **The same physical leaf keeps the same colour across
-all frames in which it appears**, so tracking can be evaluated directly against the colour-coded ground
+new leaf takes the next colour in the sequence. The same physical leaf keeps the same colour across
+all frames in which it appears, so tracking can be evaluated directly against the colour-coded ground
 truth without a Hungarian matching step. All annotations passed a two-pass quality-control review.
 
 ## Directory structure
