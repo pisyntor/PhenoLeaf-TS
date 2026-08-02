@@ -10,7 +10,7 @@
   <a href="https://huggingface.co/basimazam/PhenoLeaf-TS-models"><img alt="HF Models" src="https://img.shields.io/badge/%F0%9F%A4%97%20Models-PhenoLeaf--TS-ff9d2e"></a>
   <a href="https://pisyntor.github.io/PhenoLeaf-TS/"><img alt="Project Page" src="https://img.shields.io/badge/Project-Page-2ea44f"></a>
   <a href="https://eccv.ecva.net/"><img alt="ECCV 2026" src="https://img.shields.io/badge/ECCV-2026-1b3b6f"></a>
-  <a href="https://creativecommons.org/licenses/by/4.0/"><img alt="License" src="https://img.shields.io/badge/License-CC%20BY%204.0-blue"></a>
+  <a href="LICENSE"><img alt="Code License: Apache 2.0" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
 </p>
 
 <p align="center">
