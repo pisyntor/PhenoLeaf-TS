@@ -12,7 +12,7 @@
 | Leaves / image | 9.7 (mean), range 4–26 |
 | Growth stages | 3 (Early / Intermediate / Mature) |
 | Instance colours | 31-colour fixed palette |
-| License | CC BY 4.0 |
+| Licence | [La Trobe University Use Terms](../DATASET_LICENSE.md) |
 | Hosted at | [🤗 rick77a/PhenoLeaf_TS](https://huggingface.co/datasets/rick77a/PhenoLeaf_TS) (`PhenoLeaf-TS_DS.zip`, ~5.5 GB) |
 
 ## Acquisition
