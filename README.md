@@ -132,4 +132,4 @@ This work was supported by the Australian Research Council Industrial Transforma
 Code is Apache-2.0.
 
 The PhenoLeaf-TS dataset is provided under the
-[La Trobe University Use Terms](DATASET_LICENSE.md). The dataset is restricted to non-commercial academic research and teaching. Citation is mandatory, and redistribution or public hosting is prohibited without prior written permission.
+[La Trobe University Use Terms](DATASET_LICENSE.md). The dataset is restricted to non-commercial academic research and teaching.
