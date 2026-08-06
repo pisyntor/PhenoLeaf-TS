@@ -17,13 +17,13 @@
   <img src="assets/img/fig1.png" width="88%">
 </p>
 
-We built PhenoLeaf-TS because we kept running into the same gap: there was no dataset that follows the
-*same* leaves through time with consistent identities, at a scale large enough to benchmark modern vision
-models. So we collected one — **17,082** top-down RGB images of **21** *Arabidopsis* genotypes
-(**318** plant replicates), and hand-annotated every leaf with a colour from a fixed 31-colour palette
-that stays attached to that leaf for its entire life in the sequence. That single design choice lets you
-evaluate segmentation, tracking, and growth stage in one place, and tracking can be scored directly
-against the colours with no Hungarian matching step.
+PhenoLeaf-TS addresses a key gap in plant phenotyping: the lack of a large-scale dataset that follows
+individual leaves over time while preserving their identities across image sequences, enabling reliable
+benchmarking of modern computer vision models. So we collected one — **17,082** top-down RGB images 
+of **21** *Arabidopsis* genotypes(**318** plant replicates), and hand-annotated every leaf with a colour 
+from a fixed 31-colour palette that stays attached to that leaf for its entire life in the sequence. 
+That single design choice lets you evaluate segmentation, tracking, and growth stage in one place, and 
+tracking can be scored directly against the colours with no Hungarian matching step.
 
 The dataset accompanies our ECCV 2026 paper. This repo is the toolkit that goes with it — grab the data,
 load a model, and evaluate.
