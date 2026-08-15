@@ -4,7 +4,7 @@ PhenoLeaf-TS - Dataset Preparation
 Converts the raw PhenoLeaf-TS dataset into model-ready form:
 1. Scans the dataset structure
 2. Creates a single standard 70/15/15 train/val/test split
-3. Computes dataset statistics
+3. Computes overall dataset statistics
 4. Converts masks to COCO format (instance segmentation)
 5. Prepares YOLO-format annotations
 6. Generates growth-stage labels (classification)
