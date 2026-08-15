@@ -5,7 +5,8 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Data, outputs, checkpoints (not versioned) — anchored to repo root
-/data/
+/data/*
+!/data/split_standard.json
 /outputs/
 /checkpoints/
 *.pt

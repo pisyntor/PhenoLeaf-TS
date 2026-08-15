@@ -213,45 +213,48 @@ def scan_dataset(raw_dir, mask_dir):
 
 
 def create_splits(samples, split_config, seed=42):
-    """Create train/val/test splits.
+    """Create random 70/15/15 train/val/test splits at the image level.
 
-    IMPORTANT: Splits are done WITHIN each sequence (plant replicate) to maintain
-    temporal consistency. For each replicate's time-series:
-    - First X% of frames -> train
-    - Next Y% of frames -> val
-    - Last Z% of frames -> test
+    Frames are grouped by sequence (plant replicate) and randomly shuffled within
+    each replicate before slicing, so every replicate contributes to all three
+    splits and each split covers the full range of growth stages. A temporal
+    slice would place only late frames in the test set, leaving the early growth
+    stage unrepresented.
 
-    This ensures:
-    1. No data leakage between splits (same plant at similar times)
-    2. Proper temporal evaluation (test on later growth stages)
-    3. All replicates contribute to all splits
+    Shuffling is driven by ``seed``, so the split is reproducible.
+    Test frames are restored to chronological order after selection, which keeps
+    each replicate's test frames usable as an ordered sequence.
     """
+    rng = random.Random(seed)
+
     # Group samples by sequence (plant + replicate)
     sequences = defaultdict(list)
     for s in samples:
         key = f"{s['plant_id']}_{s['replicate_id']}"
         sequences[key].append(s)
 
-    # Sort each sequence by frame index (temporal order)
-    for key in sequences:
-        sequences[key].sort(key=lambda x: x['frame_idx'])
-
     train_samples = []
     val_samples = []
     test_samples = []
 
-    # 70/15/15 split applied within each sequence in temporal order
-    # (first frames -> train, middle -> val, last -> test). This keeps every
-    # replicate represented in all splits with no plant-level leakage.
     train_ratio = split_config["train"]
     val_ratio = split_config["val"]
-    for key, seq in sequences.items():
-        n = len(seq)
+
+    # Iterate replicates in a stable order so the seeded shuffle is deterministic
+    for key in sorted(sequences):
+        sequence = list(sequences[key])
+        rng.shuffle(sequence)
+
+        n = len(sequence)
         n_train = int(n * train_ratio)
         n_val = int(n * val_ratio)
-        train_samples.extend(seq[:n_train])
-        val_samples.extend(seq[n_train:n_train + n_val])
-        test_samples.extend(seq[n_train + n_val:])
+
+        train_samples.extend(sequence[:n_train])
+        val_samples.extend(sequence[n_train:n_train + n_val])
+
+        replicate_test_frames = sequence[n_train + n_val:]
+        replicate_test_frames.sort(key=lambda sample: sample["frame_idx"])
+        test_samples.extend(replicate_test_frames)
 
     return {
         "train": train_samples,
