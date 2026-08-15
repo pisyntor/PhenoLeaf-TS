@@ -42,7 +42,7 @@ Frames within a replicate are temporally ordered by filename.
 
 ## Growth stages
 
-Labels are derived automatically from the instance masks by counting unique leaf regions per frame:
+Labels are derived automatically from the instance masks by counting unique leaf regions per each frame:
 
 | Stage | Leaf count | Share |
 |-------|-----------|-------|
