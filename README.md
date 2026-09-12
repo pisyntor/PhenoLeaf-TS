@@ -5,11 +5,11 @@
 </p>
 
 <p align="center">
-  <a href="#"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-coming%20soon-b31b1b?logo=arxiv&logoColor=white"></a>
+  <a href="https://eccv.ecva.net/"><img alt="ECCV 2026" src="https://img.shields.io/badge/ECCV-2026-1b3b6f"></a>
+  <a href="https://link.springer.com/chapter/10.1007/978-3-032-37359-5_23"><img alt="Springer Paper" src="https://img.shields.io/badge/Springer-Paper-00599C"></a>
+  <a href="https://pisyntor.github.io/PhenoLeaf-TS/"><img alt="Project Page" src="https://img.shields.io/badge/Project-Page-2ea44f"></a>
   <a href="https://huggingface.co/datasets/rick77a/PhenoLeaf_TS"><img alt="HF Dataset" src="https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-PhenoLeaf--TS-ffcc4d"></a>
   <a href="https://huggingface.co/basimazam/PhenoLeaf-TS-models"><img alt="HF Models" src="https://img.shields.io/badge/%F0%9F%A4%97%20Models-PhenoLeaf--TS-ff9d2e"></a>
-  <a href="https://pisyntor.github.io/PhenoLeaf-TS/"><img alt="Project Page" src="https://img.shields.io/badge/Project-Page-2ea44f"></a>
-  <a href="https://eccv.ecva.net/"><img alt="ECCV 2026" src="https://img.shields.io/badge/ECCV-2026-1b3b6f"></a>
   <a href="LICENSE"><img alt="Code License: Apache 2.0" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
 </p>
 
