@@ -23,7 +23,7 @@
 PhenoLeaf-TS addresses a key gap in plant phenotyping: the lack of a large-scale dataset that follows
 individual leaves over time while preserving their identities across image sequences, enabling reliable
 benchmarking of modern computer vision models. Therefore, dataset consits of **17,082** top-down RGB collected images 
-of **21** *Arabidopsis* genotypes(**318** plant replicates), and hand-annotated every leaf with a colour 
+of **21** *Arabidopsis* genotypes (**318** plant replicates), and hand-annotated every leaf with a colour 
 from a fixed 31-colour palette that stays attached to that leaf for its entire life in the sequence. 
 That single design choice lets you evaluate segmentation, tracking, and growth stage in one place, and 
 tracking can be scored directly against the colours with no Hungarian matching step.
