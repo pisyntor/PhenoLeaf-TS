@@ -7,7 +7,6 @@
 <p align="center">
   <a href="https://eccv.ecva.net/virtual/2026/spotlight/6153"><img alt="ECCV 2026" src="https://img.shields.io/badge/ECCV-2026-1b3b6f"></a>
   <a href="https://link.springer.com/chapter/10.1007/978-3-032-37359-5_23"><img alt="ECCV 2026 Paper" src="https://img.shields.io/badge/Paper-ECCV%202026-8B1E3F"></a>
-  <a href="https://github.com/pisyntor/PhenoLeaf-TS/blob/main/assets/img/r_saric_et_al_ECCV_2026_ID9794.pdf"><img alt="ECCV 2026 Poster PDF" src="https://img.shields.io/badge/Poster-PDF-6f42c1"></a>
   <a href="https://pisyntor.github.io/PhenoLeaf-TS/"><img alt="Project Page" src="https://img.shields.io/badge/Project-Page-2ea44f"></a>
   <a href="https://huggingface.co/datasets/rick77a/PhenoLeaf_TS"><img alt="HF Dataset" src="https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-PhenoLeaf--TS-ffcc4d"></a>
   <a href="https://huggingface.co/basimazam/PhenoLeaf-TS-models"><img alt="HF Models" src="https://img.shields.io/badge/%F0%9F%A4%97%20Models-PhenoLeaf--TS-ff9d2e"></a>
