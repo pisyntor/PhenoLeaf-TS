@@ -5,7 +5,8 @@
 </p>
 
 <p align="center">
-<a href="https://eccv.ecva.net/virtual/2026/spotlight/6153">
+<a href="https://eccv.ecva.net/virtual/2026/spotlight/6153"
+  style="text-decoration: none;">
   <img alt="ECCV 2026"
        src="https://img.shields.io/badge/ECCV-2026-1b3b6f">
 </a>
