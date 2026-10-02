@@ -10,7 +10,7 @@
   <a href="https://pisyntor.github.io/PhenoLeaf-TS/"><img alt="Project Page" src="https://img.shields.io/badge/Project-Page-2ea44f"></a>
   <a href="https://huggingface.co/datasets/rick77a/PhenoLeaf_TS"><img alt="HF Dataset" src="https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-PhenoLeaf--TS-ffcc4d"></a>
   <a href="https://huggingface.co/basimazam/PhenoLeaf-TS-models"><img alt="HF Models" src="https://img.shields.io/badge/%F0%9F%A4%97%20Models-PhenoLeaf--TS-ff9d2e"></a>
-  <a href="Code LICENSE"><img alt="Code License: Apache 2.0" src="https://img.shields.io/badge/Codde-License-Apache%202.0-blue.svg"></a>
+  <a href="LICENSE"><img alt="Code License: Apache 2.0" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
 </p>
 
 <p align="center">
